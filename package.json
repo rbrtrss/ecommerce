@@ -27,8 +27,10 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "knex": "^0.95.11",
     "mongoose": "^6.0.7",
     "normalizr": "^3.6.1",
-    "socket.io": "^4.2.0"
+    "socket.io": "^4.2.0",
+    "sqlite3": "^5.0.2"
   }
 }

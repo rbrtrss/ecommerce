@@ -12,6 +12,7 @@
       integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" type="text/css" href="public/css/style.css" />
 
     <title>Hello, world!</title>
   </head>
@@ -45,6 +46,31 @@
                 />
                 <input type="submit" value="Enviar" class="btn btn-chat" />
               </form>
+              <div>
+                <h3>Lista de Productos</h3>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Producto</th>
+                      <th>Precio</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody class="table producto">
+                    <tr>
+                      <td>Pollo</td>
+                      <td>324</td>
+                      <td>
+                        <img
+                          src="https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/fried-chicken-thigh-fast-food-128.png"
+                          alt=""
+                          width="50px"
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             <h2>Chat</h2>
@@ -71,7 +97,7 @@
                 <input
                   type="number"
                   placeholder="Edad del usuario..."
-                  v-model="id"
+                  v-model="edad"
                   class="form-control"
                 />
                 <input
@@ -91,12 +117,11 @@
             </div>
 
             <div v-if="loggedIn" class="container-chat">
-              <ul id="chat">
-                <!--Recorremos el array de mensajes y mostramos uno por uno en la lista-->
-                <li v-for="m in messages">
-                  {{m.author.email}}{{m.text}} {{m.createdAt}}
-                </li>
-              </ul>
+              <div id="chat" v-for="m in messages">
+                <p class="meta emisor">{{m.author.email}}</p>
+                <span class="tiempo">{{m.createdAt}}</span>
+                <p class="text mensaje">{{m.text}}</p>
+              </div>
               <!-- con el atributo submit, le indicamos que al usar el input submit llamaremos a la funcíon sendMessage-->
               <form @submit.prevent="sendMessage">
                 <input
@@ -129,7 +154,7 @@
           email: '',
           nombre: '',
           apellido: '',
-          id: '',
+          edad: '',
           alias: '',
           avatar: '',
           author: {},
@@ -148,7 +173,7 @@
               email: this.email,
               nombre: this.nombre,
               apellido: this.apellido,
-              id: this.id,
+              edad: this.edad,
               alias: this.alias,
               avatar: this.avatar,
             };

@@ -18,7 +18,7 @@ class Mensajes {
     await nuevoMensaje.save();
   }
   async find() {
-    return await this.mensajes.find();
+    return await this.mensajes.find().lean();
   }
 }
 
