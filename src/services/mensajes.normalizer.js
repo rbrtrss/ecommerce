@@ -6,15 +6,23 @@ const nMensajes = async () => {
   // const email = new schema.Entity('email');
   //   const mensaje = new schema.Entity('mensaje', {}, { idAttribute: '_id' });
   const usuario = new schema.Entity('author', {}, { idAttribute: 'email' });
+  // const usuario = new schema.Entity('author');
+  // console.log(usuario);
   // const texto = new schema.Entity('text');
-  const listaMensaje = new schema.Entity(
+  const mensaje = new schema.Entity(
     'mensaje',
     {
       author: usuario,
     },
     { idAttribute: '_id' }
   );
-  return normalize(sinprocesar, listaMensaje);
+  // const mensaje = { mensaje: { author: usuario } };
+  // const alltogethernow = new schema.Entity('mensajes', {
+  //   author: usuario,
+  //   textos: [mensaje],
+  // });
+  return normalize(sinprocesar, [mensaje]);
+  // return sinprocesar;
   // return normalize(sinprocesar, [listaMensaje]);
 };
 
