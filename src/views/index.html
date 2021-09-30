@@ -14,15 +14,22 @@
     />
     <link rel="stylesheet" type="text/css" href="public/css/style.css" />
 
-    <title>Hello, world!</title>
+    <title>Productos y chat</title>
   </head>
   <body>
-    <h1>Hello, world!</h1>
     <div id="app">
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-6 offset-md-3">
             <h1 class="title-page">Chat en Vuejs</h1>
+
+            <div v-if="loggedIn" class="container-chat">
+              <h2>Hola {{this.email}}</h2>
+              <form @submit.prevent="logoutUser">
+                <input type="submit" value="Logout" class="btn btn-chat" />
+              </form>
+            </div>
+
             <h2>Productos</h2>
             <div class="container-chat">
               <form @submit.prevent="addProducto">
@@ -75,13 +82,20 @@
 
             <h2>Chat</h2>
             <div v-if="!loggedIn" class="container-chat">
-              <form @submit.prevent="logUser">
+              <form @submit.prevent="loginUser">
                 <input
                   type="email"
                   placeholder="Correo del usuario..."
                   v-model="email"
                   class="form-control"
                 />
+                <input
+                  type="password"
+                  placeholder="password del usuario..."
+                  v-model="password"
+                  class="form-control"
+                />
+                <!--
                 <input
                   type="text"
                   placeholder="Nombre del usuario..."
@@ -112,6 +126,7 @@
                   v-model="avatar"
                   class="form-control"
                 />
+                -->
                 <input type="submit" value="Login" class="btn btn-chat" />
               </form>
             </div>
@@ -152,11 +167,12 @@
           //Inicializamos las variables
           text: '',
           email: '',
-          nombre: '',
-          apellido: '',
-          edad: '',
-          alias: '',
-          avatar: '',
+          password: '',
+          // nombre: '',
+          // apellido: '',
+          // edad: '',
+          // alias: '',
+          // avatar: '',
           author: {},
           messages: [],
           loggedIn: false,
@@ -171,18 +187,33 @@
           creaUsuario: function () {
             return {
               email: this.email,
-              nombre: this.nombre,
-              apellido: this.apellido,
-              edad: this.edad,
-              alias: this.alias,
-              avatar: this.avatar,
+              // nombre: this.nombre,
+              // apellido: this.apellido,
+              // edad: this.edad,
+              // alias: this.alias,
+              // avatar: this.avatar,
             };
           },
-          logUser: function () {
+          loginUser: async function () {
             this.author = this.creaUsuario();
-            console.log(this.author);
+            const opcionesRequest = {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                email: this.email,
+                password: this.password,
+              }),
+            };
+            const logueado = await fetch('mensajes/login', opcionesRequest);
             socket.emit('loggedUser', this.author);
             this.loggedIn = true;
+          },
+          logoutUser: function () {
+            fetch('/mensajes/logout');
+            console.log('me fui');
+            this.email = '';
+            this.password = '';
+            this.loggedIn = false;
           },
           sendMessage: function () {
             socket.emit('message', {
