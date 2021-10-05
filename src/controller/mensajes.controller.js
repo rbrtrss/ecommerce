@@ -23,7 +23,10 @@ class MensajesController {
     if (!req.body.email || !req.body.password) {
       console.log(req.session);
       return res.json({ error: 'login fallido' });
-    } else if (req.body.email == userEmail && req.body == userPassword) {
+    } else if (
+      req.body.email === userEmail &&
+      req.body.password === userPassword
+    ) {
       req.session.email = req.body.email;
       req.session.loggedIn = true;
       console.log(req.session);
