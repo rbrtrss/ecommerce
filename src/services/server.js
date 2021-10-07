@@ -7,6 +7,7 @@ import path from 'path';
 import productos from '../controller/productos.controller';
 import mensajes from '../models/mensajes.model';
 import mensajesRouter from '../routes/mensajes.router';
+import usuariosRouter from '../routes/usuario.router';
 import { Server } from 'socket.io';
 
 const app = express();
@@ -36,6 +37,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/mensajes', mensajesRouter);
+
+app.use('/usuarios', usuariosRouter);
 
 io.on('connection', (socket) => {
   console.log(`Usuario conectado en ${socket.id}`);
